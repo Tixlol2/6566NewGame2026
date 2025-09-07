@@ -5,11 +5,9 @@ import androidx.annotation.NonNull;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.pedropathing.follower.Follower;
-import com.pedropathing.follower.FollowerConstants;
-import com.pedropathing.localization.Pose;
-import com.pedropathing.pathgen.Path;
-import com.pedropathing.pathgen.PathChain;
-import com.pedropathing.util.DashboardPoseTracker;
+import com.pedropathing.geometry.Pose;
+import com.pedropathing.paths.Path;
+import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -17,8 +15,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMeta;
 import org.firstinspires.ftc.teamcode.Util.UniConstants;
-import org.firstinspires.ftc.teamcode.pedroPathing.constants.FConstants;
-import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
+import org.firstinspires.ftc.teamcode.pedroPathing.constants.Constants;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
@@ -48,7 +45,6 @@ public class MecDrive implements Subsystem {
     public static DcMotorEx bl;
     public static DcMotorEx br;
     public static Telemetry telemetry;
-    public static DashboardPoseTracker dashboardPoseTracker;
     public MecDrive() {}
 
     public static void speedSlow(){
@@ -60,7 +56,7 @@ public class MecDrive implements Subsystem {
     }
 
     public static void drive(double x, double y, double z) {
-        follower.setTeleOpMovementVectors(
+        follower.setTeleOpDrive(
                 x * (isSlowed ? slowSpeed : 1),
                 y * (isSlowed ? slowSpeed : 1),
                 z * (isSlowed ? slowSpeed : 1),
@@ -74,19 +70,19 @@ public class MecDrive implements Subsystem {
     public void preUserInitHook(@NonNull Wrapper opMode) {
         telemetry = opMode.getOpMode().telemetry;
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        follower = new Follower(FeatureRegistrar.getActiveOpMode().hardwareMap, FConstants.class, LConstants.class);
-        dashboardPoseTracker = MecDrive.follower.getDashboardPoseTracker();
+        follower = Constants.createFollower(opMode.getOpMode().hardwareMap);
+
 
         HardwareMap hMap = opMode.getOpMode().hardwareMap;
-        fl = hMap.get(DcMotorEx.class, FollowerConstants.leftFrontMotorName);
-        bl = hMap.get(DcMotorEx.class, FollowerConstants.leftRearMotorName);
-        fr = hMap.get(DcMotorEx.class, FollowerConstants.rightFrontMotorName);
-        br = hMap.get(DcMotorEx.class, FollowerConstants.rightRearMotorName);
+        fl = hMap.get(DcMotorEx.class, UniConstants.DRIVE_FRONT_LEFT_STRING);
+        bl = hMap.get(DcMotorEx.class, UniConstants.DRIVE_BACK_LEFT_STRING);
+        fr = hMap.get(DcMotorEx.class, UniConstants.DRIVE_FRONT_RIGHT_STRING);
+        br = hMap.get(DcMotorEx.class, UniConstants.DRIVE_BACK_RIGHT_STRING);
 
-        fl.setDirection(FollowerConstants.leftFrontMotorDirection);
-        bl.setDirection(FollowerConstants.leftRearMotorDirection);
-        fr.setDirection(FollowerConstants.rightFrontMotorDirection);
-        br.setDirection(FollowerConstants.rightRearMotorDirection);
+        fl.setDirection(UniConstants.DRIVE_FRONT_LEFT_DIRECTION);
+        bl.setDirection(UniConstants.DRIVE_BACK_LEFT_DIRECTION);
+        fr.setDirection(UniConstants.DRIVE_FRONT_RIGHT_DIRECTION);
+        br.setDirection(UniConstants.DRIVE_BACK_RIGHT_DIRECTION);
 
         fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -165,7 +161,7 @@ public class MecDrive implements Subsystem {
                 .setInit(() -> follower.followPath(path, true))
                 .setExecute(() -> {
                     follower.update();
-                    follower.telemetryDebug(telemetry);
+
 
                 })
                 .setFinish(() -> !follower.isBusy())
@@ -181,7 +177,7 @@ public class MecDrive implements Subsystem {
                 .setInit(() -> follower.followPath(path, hold))
                 .setExecute(() -> {
                     follower.update();
-                    follower.telemetryDebug(telemetry);
+
                 })
                 .setFinish(() -> !follower.isBusy())
                 .setEnd((interrupted) -> {

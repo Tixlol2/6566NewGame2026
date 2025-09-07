@@ -8,9 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.pedroPathing.constants.FConstants;
-import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
-
+import org.firstinspires.ftc.teamcode.pedroPathing.constants.Constants;
 
 
 @Config //Allows ALL PUBLIC STATIC VARIABLES to be monitored on FTC Dash.
@@ -41,7 +39,7 @@ public class ExampleTeleop extends OpMode {
         //Eventually, once I have them setup, you will see examples like intake, outtake, etc.
         //Telemetry is also reinitialized here as to allow you to view it on FTC Dashboard (http://192.168.43.1:8080/dash)
         telemetry = new MultipleTelemetry(FtcDashboard.getInstance().getTelemetry(), telemetry);
-        follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
+        follower = Constants.createFollower(hardwareMap);
 
     }
 
@@ -163,7 +161,7 @@ public class ExampleTeleop extends OpMode {
 
 
         //Using the gamepad1 sticks, we set the different VECTORS that the drive will try to follow.
-        follower.setTeleOpMovementVectors(forwardDrive, strafe, heading, robotCentric);
+        follower.setTeleOpDrive(forwardDrive, strafe, heading, robotCentric);
         //Updates all aspects of the follower, including but not limited to its
         //Current pose data, power vectors, target poses, etc.
         follower.update();

@@ -42,7 +42,7 @@ dependencies {
 
 
     implementation "dev.frozenmilk.dairy:Core:2.2.3"
-    implementation "dev.frozenmilk.sinister:Sloth:0.2.3"
+    implementation "dev.frozenmilk.sinister:Sloth:0.2.4"
     implementation "dev.frozenmilk.mercurial:Mercurial:1.0.3"
 
 }
