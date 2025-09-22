@@ -38,7 +38,7 @@ public class PDFLController {
      * Runs the PDFL controller using the given position and target.
      * @return The output of the controller
      */
-    public double runPDFL(int errorMin) {
+    public double runPDFL(double errorMin) {
         double returnVal = (error*p) + (dError*d);
         dir = error > 0 ? 1 : error < 0 ? -1 : 0;
 

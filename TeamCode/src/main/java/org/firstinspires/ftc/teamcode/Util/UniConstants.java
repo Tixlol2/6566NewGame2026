@@ -49,6 +49,7 @@ public class UniConstants {
     public static int GREEN_ARTIFACT_UPPER_HUE = 150;
     public static int GREEN_ARTIFACT_LOWER_HUE = 100;
 
+    public static final int SPACE_BETWEEN_ROTARY_SLOTS = 300;
 
 
 
