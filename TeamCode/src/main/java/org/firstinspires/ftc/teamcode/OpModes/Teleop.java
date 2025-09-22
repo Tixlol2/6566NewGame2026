@@ -10,7 +10,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.sun.tools.javac.util.List;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.Util.Subsystems.MecDrive;
 import org.firstinspires.ftc.teamcode.Util.UniConstants;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.Constants;
@@ -28,6 +27,9 @@ import dev.frozenmilk.mercurial.Mercurial;
 public class Teleop extends OpMode {
 
 
+    final double angleOfLauncherInDegrees = 35;
+    final double heightOfRobotInMeters = 0.35;
+    final double heightToGoalWithClearance = (1.11125) - (heightOfRobotInMeters);
 
     Follower follower;
 
@@ -107,10 +109,10 @@ public class Teleop extends OpMode {
         //Tradeoff of accuracy vs chub efficiency
 
         //Velocity should be constantly interpolated via apriltag localization data right? Heavy comp power
-        //This should be done in terms of radians per second somehow?? Like transcribe exit velo to radians per second for motor
+        //Velocity should only be queried when ready to shoot.
         //TODO: Generate linear regression to determine velocity for given positions
-        //Like, the radial velocity will be a function of the target exit velocity or smth
-        launcher.setVelocity(launchVelocityRPS, AngleUnit.RADIANS);
+        //Exit velocity will be a function of the power put into the motor (PDFL)
+
 
 
 
@@ -150,6 +152,16 @@ public class Teleop extends OpMode {
             }
         }
 
+    }
+
+    public double getVelocity(double distanceToGoalInMeters){
+        //https://www.desmos.com/calculator/yw7iis7m3w
+        //https://medium.com/@vikramaditya.nishant/programming-a-decode-shooter-4ab114dac01f
+        return Math.sqrt(
+                ((9.81)*(Math.pow(distanceToGoalInMeters, 2)))
+                        /
+                        (Math.pow(2*(Math.cos(Math.toRadians(angleOfLauncherInDegrees))),2) * ((distanceToGoalInMeters*Math.tan(Math.toRadians(angleOfLauncherInDegrees))) - heightToGoalWithClearance))
+        );
     }
 
 }
