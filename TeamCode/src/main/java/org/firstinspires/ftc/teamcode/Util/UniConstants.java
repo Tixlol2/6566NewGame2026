@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Util;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import java.util.HashMap;
 
@@ -26,14 +27,33 @@ public class UniConstants {
         EXTREME
     }
 
-    public final static HashMap<Integer, String> ID_TO_NAME = new HashMap<Integer, String>() {{
-        put(20, "BLUE GOAL");
-        put(21, "GPP");
-        put(22, "PGP");
-        put(23, "PPG");
-        put(24, "RED GOAL");
+    public enum slotState{
+        PURPLE,
+        GREEN,
+        EMPTY
+    }
 
-    }};
+    public static final String COLOR_SENSOR_SLOT_1_STRING = "COLOR0";
+    public static final String COLOR_SENSOR_SLOT_2_STRING = "COLOR1";
+    public static final String COLOR_SENSOR_SLOT_3_STRING = "COLOR2";
+
+    public static final String ACTIVE_INTAKE_STRING = "ACTIVE";
+    public static final String LAUNCHER_STRING  = "LAUNCHER";
+    public static final String ROTARY_STRING = "ROTARY";
+    public static final DcMotorSimple.Direction ROTARY_DIRECTION = DcMotorSimple.Direction.FORWARD; //TODO: Ensure this is correct direction
+
+
+    public static int PURPLE_ARTIFACT_UPPER_HUE = 350;
+    public static int PURPLE_ARTIFACT_LOWER_HUE = 275;
+
+    public static int GREEN_ARTIFACT_UPPER_HUE = 150;
+    public static int GREEN_ARTIFACT_LOWER_HUE = 100;
+
+
+
+
+
+
 
 
 
