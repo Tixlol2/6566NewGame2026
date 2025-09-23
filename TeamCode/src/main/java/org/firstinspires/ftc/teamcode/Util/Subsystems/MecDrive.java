@@ -84,11 +84,6 @@ public class MecDrive implements Subsystem {
         fr.setDirection(UniConstants.DRIVE_FRONT_RIGHT_DIRECTION);
         br.setDirection(UniConstants.DRIVE_BACK_RIGHT_DIRECTION);
 
-        fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
 
 
         follower.setStartingPose(new Pose(0, 0, 0));
