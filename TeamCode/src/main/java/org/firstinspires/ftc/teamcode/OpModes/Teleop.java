@@ -149,7 +149,7 @@ public class Teleop extends OpMode {
         telemetry.addLine();
         telemetry.addData("Launcher Target Velocity ", launcherTargetVelocity);
         telemetry.addData("Calculated Launch Velocity ", getTargetVelocity(distanceToGoalInMeters));
-        telemetry.addData("Distance To Goal Meters ", distanceToGoalInMeters);
+        telemetry.addData("Distance To Goal In Meters ", distanceToGoalInMeters);
 
 
         telemetry.update();
