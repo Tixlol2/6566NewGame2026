@@ -33,6 +33,7 @@ public class Teleop extends OpMode {
     final double angleOfLauncherInDegrees = 35;
     final double heightOfRobotInMeters = 0.35;
     final double heightToGoalWithClearance = (1.11125) - (heightOfRobotInMeters);
+    final double ratioOfTurretToServo = 0/5;
 
     double distanceToGoalInMeters = 0.0;
 
@@ -150,6 +151,8 @@ public class Teleop extends OpMode {
         telemetry.addData("Launcher Target Velocity ", launcherTargetVelocity);
         telemetry.addData("Calculated Launch Velocity ", getTargetVelocity(distanceToGoalInMeters));
         telemetry.addData("Distance To Goal In Meters ", distanceToGoalInMeters);
+        telemetry.addLine();
+        telemetry.addData("Turret Servo Target ", getTurretServoPosition(0, ratioOfTurretToServo, 300));
 
 
         telemetry.update();
@@ -219,6 +222,11 @@ public class Teleop extends OpMode {
 
 
 
+    }
+
+    public double getTurretServoPosition(double angleInDegrees, double ratio, double maxAngle){
+        angleInDegrees = Math.max(maxAngle, Math.min(0, angleInDegrees));
+        return (ratio*angleInDegrees)/maxAngle;
     }
 
 }
