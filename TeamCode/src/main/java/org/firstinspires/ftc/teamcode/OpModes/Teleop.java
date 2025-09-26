@@ -5,6 +5,7 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.pedropathing.follower.Follower;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -33,7 +34,8 @@ public class Teleop extends OpMode {
     final double angleOfLauncherInDegrees = 35;
     final double heightOfRobotInMeters = 0.35;
     final double heightToGoalWithClearance = (1.11125) - (heightOfRobotInMeters);
-    final double ratioOfTurretToServo = 0/5;
+    final double turretPulleyRatio = 24/155; //Motor to Turret
+    final double turretTicksPerDegree = 537.7/360;
 
     double distanceToGoalInMeters = 0.0;
 
@@ -58,6 +60,8 @@ public class Teleop extends OpMode {
     ArrayList<UniConstants.slotState> pattern = new ArrayList<>();
     ArrayList<ColorSensor> colorSensors = new ArrayList<>();
 
+
+    CRServo stupidServo;
 
     @Override
     public void init() {
@@ -94,6 +98,8 @@ public class Teleop extends OpMode {
         for (ColorSensor sensor : colorSensors) {
             sensor.enableLed(true);
         }
+
+
 
 
     }
@@ -152,7 +158,7 @@ public class Teleop extends OpMode {
         telemetry.addData("Calculated Launch Velocity ", getTargetVelocity(distanceToGoalInMeters));
         telemetry.addData("Distance To Goal In Meters ", distanceToGoalInMeters);
         telemetry.addLine();
-        telemetry.addData("Turret Servo Target ", getTurretServoPosition(0, ratioOfTurretToServo, 300));
+
 
 
         telemetry.update();
@@ -224,9 +230,10 @@ public class Teleop extends OpMode {
 
     }
 
-    public double getTurretServoPosition(double angleInDegrees, double ratio, double maxAngle){
-        angleInDegrees = Math.max(maxAngle, Math.min(0, angleInDegrees));
-        return (ratio*angleInDegrees)/maxAngle;
+    public double getTurretTargetPosition(double turretTargetAngle, double ratio, double ticksPerDegree){
+
+        return turretTargetAngle * ratio * ticksPerDegree;
+
     }
 
 }
