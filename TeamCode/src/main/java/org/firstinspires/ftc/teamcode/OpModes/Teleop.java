@@ -53,7 +53,9 @@ public class Teleop extends OpMode {
 
     public static double pL, dL, lL, fL;
     PDFLController launcherController = new PDFLController(pL, dL, fL, lL);
-    public static double launcherTargetVelocity = 0;
+    public static double launcherTargetPosition = 0;
+
+    double turretTargetAngle = 0;
 
 
     ArrayList<UniConstants.slotState> slots = new ArrayList<>(List.of(UniConstants.slotState.EMPTY, UniConstants.slotState.EMPTY, UniConstants.slotState.EMPTY));
@@ -141,11 +143,12 @@ public class Teleop extends OpMode {
         rotary.setPower(rotaryController.runPDFL(5));
 
 
-        launcherController.setTarget(launcherTargetVelocity);
-        launcherController.update(launcher.getVelocity());
-        launcher.setPower(launcherController.runPDFL(0.005));
+        launcherController.setTarget(launcherTargetPosition);
+        launcherController.update(launcher.getCurrentPosition());
+        launcher.setPower(launcherController.runPDFL(5));
 
         distanceToGoalInMeters = getDistanceToGoalInMeters();
+        turretTargetAngle = 0; //Vision.getTargetAngle
 
         follower.setTeleOpDrive(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x, true);
 
@@ -154,7 +157,8 @@ public class Teleop extends OpMode {
         telemetry.addData("Slot 1 State ", slots.get(1));
         telemetry.addData("Slot 2 State ", slots.get(2));
         telemetry.addLine();
-        telemetry.addData("Launcher Target Velocity ", launcherTargetVelocity);
+        telemetry.addData("Launcher Target Position ", launcherTargetPosition);
+        telemetry.addData("Launcher Target Angle (Deg) ", turretTargetAngle);
         telemetry.addData("Calculated Launch Velocity ", getTargetVelocity(distanceToGoalInMeters));
         telemetry.addData("Distance To Goal In Meters ", distanceToGoalInMeters);
         telemetry.addLine();
@@ -231,6 +235,8 @@ public class Teleop extends OpMode {
     }
 
     public double getTurretTargetPosition(double turretTargetAngle, double ratio, double ticksPerDegree){
+
+        //Ratio given in terms of motor/turret
 
         return turretTargetAngle * ratio * ticksPerDegree;
 
