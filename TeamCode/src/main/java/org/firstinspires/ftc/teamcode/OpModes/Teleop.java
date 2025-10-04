@@ -16,6 +16,8 @@ import org.firstinspires.ftc.teamcode.Util.Poses;
 import org.firstinspires.ftc.teamcode.Util.Subsystems.MecDrive;
 import org.firstinspires.ftc.teamcode.Util.UniConstants;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.Constants;
+import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+import org.firstinspires.ftc.vision.opencv.ColorBlobLocatorProcessor;
 
 import java.util.ArrayList;
 
@@ -62,8 +64,12 @@ public class Teleop extends OpMode {
     ArrayList<UniConstants.slotState> pattern = new ArrayList<>();
     ArrayList<ColorSensor> colorSensors = new ArrayList<>();
 
+    AprilTagProcessor aprilTagProcessor = UniConstants.aprilTagProcessor;
+    ColorBlobLocatorProcessor colorLocatorPurple = UniConstants.colorLocatorPurple;
+    ColorBlobLocatorProcessor colorLocatorGreen = UniConstants.colorLocatorGreen;
 
-    CRServo stupidServo;
+
+
 
     @Override
     public void init() {

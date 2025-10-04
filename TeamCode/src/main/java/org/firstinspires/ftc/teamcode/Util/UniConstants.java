@@ -1,8 +1,15 @@
 package org.firstinspires.ftc.teamcode.Util;
 
+import android.graphics.Color;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
+import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+import org.firstinspires.ftc.vision.opencv.ColorBlobLocatorProcessor;
+import org.firstinspires.ftc.vision.opencv.ColorRange;
+import org.firstinspires.ftc.vision.opencv.ImageRegion;
 
 import java.util.HashMap;
 
@@ -52,7 +59,42 @@ public class UniConstants {
     public static final int SPACE_BETWEEN_ROTARY_SLOTS = 300;
 
 
+    public static final AprilTagProcessor aprilTagProcessor = new AprilTagProcessor.Builder()
+            .setDrawTagID(true)
+            .setDrawAxes(true)
+            .setDrawCubeProjection(true)
+            .build();
+    public static final ColorBlobLocatorProcessor colorLocatorPurple = new ColorBlobLocatorProcessor.Builder()
+            .setTargetColorRange(ColorRange.ARTIFACT_PURPLE)   // Use a predefined color match
+            .setContourMode(ColorBlobLocatorProcessor.ContourMode.EXTERNAL_ONLY)
+            .setRoi(ImageRegion.asUnityCenterCoordinates(-0.75, 0.75, 0.75, -0.75))
+            .setDrawContours(true)   // Show contours on the Stream Preview
+            .setBoxFitColor(0)       // Disable the drawing of rectangles
+            .setCircleFitColor(Color.rgb(255, 255, 0)) // Draw a circle
+            .setBlurSize(5)          // Smooth the transitions between different colors in image
 
+            // the following options have been added to fill in perimeter holes.
+            .setDilateSize(15)       // Expand blobs to fill any divots on the edges
+            .setErodeSize(15)        // Shrink blobs back to original size
+            .setMorphOperationType(ColorBlobLocatorProcessor.MorphOperationType.CLOSING)
+
+            .build();
+
+    public static final ColorBlobLocatorProcessor colorLocatorGreen = new ColorBlobLocatorProcessor.Builder()
+            .setTargetColorRange(ColorRange.ARTIFACT_GREEN)   // Use a predefined color match
+            .setContourMode(ColorBlobLocatorProcessor.ContourMode.EXTERNAL_ONLY)
+            .setRoi(ImageRegion.asUnityCenterCoordinates(-0.75, 0.75, 0.75, -0.75))
+            .setDrawContours(true)   // Show contours on the Stream Preview
+            .setBoxFitColor(0)       // Disable the drawing of rectangles
+            .setCircleFitColor(Color.rgb(255, 255, 0)) // Draw a circle
+            .setBlurSize(5)          // Smooth the transitions between different colors in image
+
+            // the following options have been added to fill in perimeter holes.
+            .setDilateSize(15)       // Expand blobs to fill any divots on the edges
+            .setErodeSize(15)        // Shrink blobs back to original size
+            .setMorphOperationType(ColorBlobLocatorProcessor.MorphOperationType.CLOSING)
+
+            .build();
 
 
 
