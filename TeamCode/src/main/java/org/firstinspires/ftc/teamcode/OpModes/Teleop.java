@@ -34,7 +34,7 @@ public class Teleop extends OpMode {
     final double angleOfLauncherInDegrees = 35;
     final double heightOfRobotInMeters = 0.35;
     final double heightToGoalWithClearance = (1.11125) - (heightOfRobotInMeters);
-    final double turretPulleyRatio = 24/155; //Motor to Turret
+    final double turretPulleyRatio = (double) 24 /155; //Motor to Turret
     final double turretTicksPerDegree = 537.7/360;
 
     double distanceToGoalInMeters = 0.0;
@@ -117,9 +117,9 @@ public class Teleop extends OpMode {
             }
         }
 
-        if (gamepad1.y) {
-            readSlots();
-        }
+
+        readSlots();
+
 
 
         //If blue, aim for blue goal else aim for red goal - this target position will be fed to servo
@@ -199,7 +199,7 @@ public class Teleop extends OpMode {
     }
 
     public boolean allFull() {
-        readSlots();
+
         for (UniConstants.slotState slot : slots) {
             if (!isFull(slot)) {
                 return false;
