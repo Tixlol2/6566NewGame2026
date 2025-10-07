@@ -96,9 +96,18 @@ public class UniConstants {
 
             .build();
 
+    public static int obeliskID = 0;
 
+    public enum TeamColor{
+        BLUE,
+        RED
+    }
 
+    //TODO:In auto this should be implemented to change
+    public static TeamColor robotColor = null;
 
+    public static final int BLUE_GOAL_ID = 20;
+    public static final int RED_GOAL_ID = 24;
 
 
 }

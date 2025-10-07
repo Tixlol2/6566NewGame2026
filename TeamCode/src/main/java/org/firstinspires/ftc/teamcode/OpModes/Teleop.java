@@ -31,7 +31,7 @@ import dev.frozenmilk.mercurial.Mercurial;
 //@Disabled //How you would disable/enable an opmode from appearing on the DS
 public class Teleop extends OpMode {
 
-    public static int obeliskApriltagID = 21;
+
 
     final double angleOfLauncherInDegrees = 35;
     final double heightOfRobotInMeters = 0.35;
@@ -98,7 +98,7 @@ public class Teleop extends OpMode {
 
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        obeliskTargetPattern(obeliskApriltagID);
+        obeliskTargetPattern(UniConstants.obeliskID);
     }
 
     @Override
