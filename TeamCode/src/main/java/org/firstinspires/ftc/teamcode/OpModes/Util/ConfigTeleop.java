@@ -13,9 +13,14 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 public class ConfigTeleop extends OpMode {
 
     DcMotorEx motor;
-    public static String name = "motor";
+    public static String name = "name";
 
     public static double power = 0;
+    public static double maxVelo = 2800;
+
+    //1+1=2
+
+
 
 
 
@@ -150,6 +155,9 @@ public class ConfigTeleop extends OpMode {
         //Sends the 'packet' of telemetry to both the Driver Hub and FTCDashboard
         telemetry.addData("Power ", power);
         telemetry.addData("Velocity ", motor.getVelocity());
+        telemetry.addData("RPM ", 60*(motor.getVelocity()/28));
+        telemetry.addData("Max Velocity ", maxVelo);
+        telemetry.addData("Max RPM ", 60*(maxVelo/28));
         telemetry.update();
 
 
